@@ -1,28 +1,10 @@
-package net.timoti11;
+package net.timoti11.util;
 
-public class Converter {
+public class BitHandler {
     private static final long[] STORAGE = new long[1 << 26];
     private static long addressCounter = 0;
 
-    public void convertToLong(String ipAddress) {
-        long ipConverted = convertIpToLong(ipAddress);
-        handleByteShift(ipConverted);
-    }
-
-    private long convertIpToLong(String ipAddress) {
-        long result = 0L;
-        int shift = 24;
-
-        for (String part : ipAddress.split("\\.")) {
-            long partLong = Long.parseLong(part);
-            result |= (partLong << shift);
-            shift-=8;
-        }
-
-        return result;
-    }
-
-    private static void handleByteShift(long ipConverted) {
+    public void handleByteShift(long ipConverted) {
         addressCounter += setBit(ipConverted) ? 0 : 1;
     }
 

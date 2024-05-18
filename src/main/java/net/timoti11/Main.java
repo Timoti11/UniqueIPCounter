@@ -1,5 +1,7 @@
 package net.timoti11;
 
+import net.timoti11.util.Converter;
+
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -7,7 +9,7 @@ import java.nio.file.Files;
 import java.util.logging.Logger;
 import java.util.stream.Stream;
 
-import static net.timoti11.Converter.getUniqueAddresses;
+import static net.timoti11.util.BitHandler.getUniqueAddresses;
 
 public class Main {
     private static final Logger LOGGER = Logger.getLogger(Main.class.getName());
