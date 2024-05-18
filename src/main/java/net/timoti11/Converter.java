@@ -1,57 +1,45 @@
 package net.timoti11;
 
 public class Converter {
-    private static final long[] storage = new long[1 << 26];
+    private static final long[] STORAGE = new long[1 << 26];
     private static long addressCounter = 0;
 
-    public void convertToLong(String value) {
-        var parts = value.split("\\.");
-
-        long resultLong = 0;
-
-        for (int i = 0; i < parts.length; i++) {
-            long ip = Long.parseLong(parts[i]);
-            resultLong += ip << (8 * (3 - i));
-        }
-//        System.out.println("IP: " + value);
-//        System.out.println("resultLong: " + resultLong);
-        byteShift(resultLong);
-        System.out.println();
+    public void convertToLong(String ipAddress) {
+        long ipConverted = convertIpToLong(ipAddress);
+        handleByteShift(ipConverted);
     }
 
-    public static void byteShift(long input) {
-//        System.out.println((Runtime.getRuntime().totalMemory()-Runtime.getRuntime().freeMemory())/1048576 + " MB");
-//        System.out.println(counter + "/" + "1000000");
-        if (!setBit(input)) {
-            addressCounter++;
+    private long convertIpToLong(String ipAddress) {
+        long result = 0L;
+        int shift = 24;
+
+        for (String part : ipAddress.split("\\.")) {
+            long partLong = Long.parseLong(part);
+            result |= (partLong << shift);
+            shift-=8;
         }
+
+        return result;
     }
 
-    public static boolean setBit(long input) {
-        long indexStorage = input / 64;
-        int indexStorageInt = (int) indexStorage;
+    private static void handleByteShift(long ipConverted) {
+        addressCounter += setBit(ipConverted) ? 0 : 1;
+    }
 
-        long indexStorageBit = input - indexStorage * 64;
-        int indexStorageBitInt = (int) indexStorageBit;
+    private static boolean setBit(long ipConverted) {
+        long storageIndex = ipConverted >> 6;
+        int bitIndex = (int) (ipConverted % 64);
 
-        long currentStorage = storage[indexStorageInt];
+        long currentStorage = STORAGE[(int) storageIndex];
 
-//        System.out.println("Storage: " + indexStorage);
-//        System.out.println("Bit: " + indexStorageBit);
-//        System.out.println("Initial storage(int)[" + indexStorageInt + "]: " + storage[indexStorageInt]);
-//        System.out.println("Initial storage(decimal)[" + indexStorageInt + "]: " + Long.toBinaryString(currentStorage));
-//        System.out.println("indexStorageBitInt: " + indexStorageBitInt);
+        long safeValue = STORAGE[(int) storageIndex];
+        long bitMask = 1L << bitIndex;
 
-        if ((currentStorage & (1L << indexStorageBitInt)) != 0) {
-//            System.out.println("Updated storage[" + indexStorageInt + "]: " + Long.toBinaryString(storage[indexStorageInt]));
-//            System.out.println("SKIP!");
-            return true;
-        } else {
-            storage[indexStorageInt] = currentStorage | (1L << indexStorageBitInt);
-//            System.out.println("Updated storage[" + indexStorageInt + "]: " + Long.toBinaryString(storage[indexStorageInt]));
-//            System.out.println("NEW VALUE!");
-            return false;
-        }
+        boolean isBitExit = (currentStorage & bitMask) != 0;
+
+        STORAGE[(int) storageIndex] = currentStorage | bitMask;
+
+        return isBitExit;
     }
 
     public static long getUniqueAddresses() {

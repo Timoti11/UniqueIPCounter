@@ -10,7 +10,7 @@ import java.util.stream.IntStream;
 
 public class IPFileGenerator {
     private static final Random random = new Random();
-    final public static int IP_AMMOUNT = 100000000;
+    final public static int IP_AMMOUNT = 228228;
 
     public static void main(String[] args) {
         long startTime = System.currentTimeMillis();
