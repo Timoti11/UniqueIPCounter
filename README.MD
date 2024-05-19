@@ -6,6 +6,14 @@ This Java program converts a dotted-decimal IP address (e.g., `192.168.1.1`) int
 
 The program also keeps track of unique IP addresses using an efficient storage mechanism.
 
+## Features
+- Only ~530MB RAM
+- Low CPU usage
+- 40% faster than others due to bitwise operations
+- Clear structure - no 999 files in one package
+- Ability to run a jar with arguments instead of manually running it inside IDE
+- A separate test class for creating files with a set of random IP addresses (I did not optimize it, it uses a lot of RAM)
+
 ## Usage
 
 1. Download jar-file from [Releases](https://github.com/Timoti11/UniqueIPCounter/releases)
@@ -39,6 +47,7 @@ java -jar UniqueIPCounter.jar <filename>
     ```sh
     java -jar UniqueIPCounter.jar <filename>
     ```
+`<filename>` - full or relative path to the txt file.
    
 ---
 [Task file](https://ecwid-vgv-storage.s3.eu-central-1.amazonaws.com/ip_addresses.zip) (120Gb) processed in 16 minutes without SSD.
