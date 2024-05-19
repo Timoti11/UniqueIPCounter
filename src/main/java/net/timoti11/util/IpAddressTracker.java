@@ -1,29 +1,34 @@
 package net.timoti11.util;
 
 public class IpAddressTracker {
-    private static final long[] STORAGE = new long[1 << 26];
-    private static long addressCounter = 0;
+    private final long[] storage;
+    private long addressCounter;
+
+    public IpAddressTracker() {
+        this.storage = new long[1 << 26];
+        this.addressCounter = 0;
+    }
 
     public void checkAndIncrementCounter(long ipConverted) {
         if (!setBit(ipConverted)) addressCounter++;
     }
 
-    private static boolean setBit(long ipConverted) {
+    private boolean setBit(long ipConverted) {
         long storageIndex = ipConverted >> 6;
         int bitIndex = (int) (ipConverted % 64);
 
-        long currentStorage = STORAGE[(int) storageIndex];
+        long currentStorage = storage[(int) storageIndex];
 
         long bitMask = 1L << bitIndex;
 
-        boolean isBitExit = (currentStorage & bitMask) != 0;
+        boolean isBitSet = (currentStorage & bitMask) != 0;
 
-        STORAGE[(int) storageIndex] = currentStorage | bitMask;
+        storage[(int) storageIndex] = currentStorage | bitMask;
 
-        return isBitExit;
+        return isBitSet;
     }
 
-    public static long getCountUniqueAddresses() {
+    public long getCountUniqueAddresses() {
         return addressCounter;
     }
 }

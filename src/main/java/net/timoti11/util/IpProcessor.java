@@ -1,7 +1,11 @@
 package net.timoti11.util;
 
 public class IpProcessor {
-    private static final IpAddressTracker ipAddressTracker = new IpAddressTracker();
+    private final IpAddressTracker ipAddressTracker;
+
+    public IpProcessor(IpAddressTracker ipAddressTracker) {
+        this.ipAddressTracker = ipAddressTracker;
+    }
 
     public void convertAndHandleIp(String ipAddress) {
         long ipConverted = IPConverter.convertIpToLong(ipAddress);
