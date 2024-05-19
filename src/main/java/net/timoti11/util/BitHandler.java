@@ -5,9 +5,7 @@ public class BitHandler {
     private static long addressCounter = 0;
 
     public void handleByteShift(long ipConverted) {
-        if (!setBit(ipConverted)) {
-            addressCounter++;
-        }
+        if (!setBit(ipConverted)) addressCounter++;
     }
 
     private static boolean setBit(long ipConverted) {
