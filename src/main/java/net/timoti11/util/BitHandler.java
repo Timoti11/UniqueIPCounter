@@ -5,7 +5,9 @@ public class BitHandler {
     private static long addressCounter = 0;
 
     public void handleByteShift(long ipConverted) {
-        addressCounter += setBit(ipConverted) ? 0 : 1;
+        if (!setBit(ipConverted)) {
+            addressCounter++;
+        }
     }
 
     private static boolean setBit(long ipConverted) {
@@ -14,7 +16,6 @@ public class BitHandler {
 
         long currentStorage = STORAGE[(int) storageIndex];
 
-        long safeValue = STORAGE[(int) storageIndex];
         long bitMask = 1L << bitIndex;
 
         boolean isBitExit = (currentStorage & bitMask) != 0;
