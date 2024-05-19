@@ -1,10 +1,10 @@
 package net.timoti11.util;
 
-public class BitHandler {
+public class IpAddressTracker {
     private static final long[] STORAGE = new long[1 << 26];
     private static long addressCounter = 0;
 
-    public void handleByteShift(long ipConverted) {
+    public void checkAndIncrementCounter(long ipConverted) {
         if (!setBit(ipConverted)) addressCounter++;
     }
 
@@ -23,7 +23,7 @@ public class BitHandler {
         return isBitExit;
     }
 
-    public static long getUniqueAddresses() {
+    public static long getCountUniqueAddresses() {
         return addressCounter;
     }
 }
