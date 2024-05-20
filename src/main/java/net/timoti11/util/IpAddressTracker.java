@@ -39,21 +39,15 @@ public class IpAddressTracker {
      * @return true if the bit was already set (indicating a duplicate IP address), false otherwise.
      */
     private boolean setBit(long ipConverted) {
-        //Take the index of storage array for converted IP
         long storageIndex = ipConverted >> 6;
-        //Take the index of bit in the storage for converted IP
         int bitIndex = (int) (ipConverted % 64);
 
-        //Take current storage for converted IP
         long currentStorage = storage[(int) storageIndex];
 
-        //Creating the mask by bit index of converted IP
         long bitMask = 1L << bitIndex;
 
-        //Check for a repeated IP address in storage
         boolean isBitSet = (currentStorage & bitMask) != 0;
 
-        //Setting the bit in any case by mask
         storage[(int) storageIndex] = currentStorage | bitMask;
 
         return isBitSet;

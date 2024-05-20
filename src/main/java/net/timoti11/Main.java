@@ -22,29 +22,22 @@ public class Main {
      */
 
     public static void main(String[] args) {
-        //Check for illegal arguments
         if (args.length != 1) {
             LOGGER.severe("Detected " + args.length + " arguments, but 1 argument was expected");
             return;
         }
-        //Getting a file from a command line argument
         final File file = new File(args[0]);
 
         try (Stream<String> lines = Files.lines(file.toPath(), StandardCharsets.US_ASCII)) {
-            //Write the program start time
             long startTime = System.currentTimeMillis();
 
-            //Creating objects for working with strings
             IpAddressTracker ipAddressTracker = new IpAddressTracker();
             IpProcessor ipProcessor = new IpProcessor(ipAddressTracker);
 
-            //Processing IP addresses from a file
             processIpAddresses(lines, ipProcessor);
 
-            //Getting the final count of unique addressess
             long countUniqueAddresses = ipAddressTracker.getCountUniqueAddresses();
 
-            //Info output after the search is completed
             LOGGER.info("Process time: " + (System.currentTimeMillis() - startTime) + " ms");
             LOGGER.info("Found " + countUniqueAddresses + " unique IP addresses!");
         } catch (IOException e) {
@@ -53,7 +46,6 @@ public class Main {
     }
 
     public static void processIpAddresses(Stream<String> ipStream, IpProcessor ipProcessor) {
-        //convertAndHandleIp for each String from Stream
         ipStream.forEach(ipProcessor::convertAndHandleIp);
     }
 }

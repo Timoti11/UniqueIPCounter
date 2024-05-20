@@ -14,9 +14,7 @@ public class IpProcessor {
     }
 
     public void convertAndHandleIp(String ipAddress) {
-        //Take the long representation of address
         long ipConverted = IPConverter.convertIpToLong(ipAddress);
-        //Checks for duplicate and increment the counter if need it
         ipAddressTracker.checkAndIncrementCounter(ipConverted);
     }
 }

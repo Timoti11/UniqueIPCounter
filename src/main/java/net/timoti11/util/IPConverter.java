@@ -12,7 +12,6 @@ class IPConverter {
 
         for (int i = 0; i < ipAddress.length(); i++) {
             char c = ipAddress.charAt(i);
-            // If the character is a dot, shift the part to its correct position and reset partLong for new segment of address
             if (c == '.') {
                 result |= (partLong << shift);
                 shift -= 8;
